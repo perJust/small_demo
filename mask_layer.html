@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>遮罩层</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .wrapper{
+            width: 500px;
+            height: 30px;
+            background-color: #f1ea7b;
+        }
+        .mask{
+            width: 100%;
+            height: 100%;
+            background-color: #f40;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <button>弹出框</button>
+        <input type="text">
+    </div>
+    <div class="mask">
+        <div class="dialog">
+            请输入： <input type="text">
+            <textarea name="text" id="textTag" cols="20" rows="5"></textarea>
+        </div>
+    </div>
+</body>
+</html>

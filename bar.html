@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>进度条</title>
+</head>
+<style>
+    .wrapper {
+        width: 50%;
+        height: 500px;
+        border: 1px solid #777;
+        position: relative;
+    }
+
+    .showImg {
+        position: absolute;
+        top: 50px;
+        left: 20%;
+        width: 50%;
+        height: 100px;
+        border: 1px solid #f40;
+    }
+
+    .content {
+        position: absolute;
+        top: 160px;
+        left: 18%;
+        width: 80%;
+        height: 20px;
+        border: 1px solid #4f75f1;
+        overflow: hidden;
+    }
+
+    .show {
+        width: 100%;
+        height: 20px;
+    }
+
+    .moveShow {
+        position: absolute;
+        top: 0px;
+        left: -100%;
+        width: 100%;
+        height: 20px;
+        background-color: #e0dd1f;
+    }
+    .start .showImg {
+        animation: moveImg 2s ease 0s infinite alternate;
+    }
+    .start .moveShow {
+        animation: moveShow 10s linear 1s 1 normal forwards; /* forwards 为animation-fill-mode属性值，forwards表示动画完成后，停留在动画的结束时的状态(即应用规定样式到目标元素)；默认值是none，表示动画结束后不应用任何样式到目标元素，就是说开始动画之前元素是什么样，那动画完成后就是什么样 */
+    }
+    .paused .showImg {
+        animation-play-state: paused;
+    }
+    .paused .moveShow {
+        animation-play-state: paused;        
+    }
+    @keyframes  moveImg {
+        from {
+            transform: translateY(0px);
+            /* top:40px; */
+        }
+        to {
+            transform: translateY(-40px);            
+            /* top:10px; */
+        }
+    }
+    @keyframes moveShow {
+        from {
+            /* transform: translateX(0%); */
+
+            left:-100%;   /* 之所以写left是因为js能正常读取元素的left属性值，为什么? --> left值都没改变,读取的肯定是初始的left值，transform是对元素变形，修改的只是视觉效果，目标元素原有计算属性中的位置属性还是没发生改变  */
+        }
+        to {
+            /* transform: translateX(100%); */
+            
+            left: 0;
+        }
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div>
+            <div class="showImg"></div>
+            <div class="content">
+                <div class="show"></div>
+                <div class="moveShow"></div>
+            </div>
+        </div>
+        <div style="position: absolute;bottom: 50px;">
+        <p></p>
+        </div>
+    </div>
+    <button style="width: 80px;height:20px;outline: none;border-radius: 5px;background-color: #e68;">开始动画</button>
+    <button style="width: 80px;height:20px;outline: none;border-radius: 5px;background-color: #e68;">停止动画</button>    
+    <script>
+        var div2 = document.getElementsByTagName('div')[1];
+        var moveShow = document.getElementsByClassName('moveShow')[0];
+        var btn = document.getElementsByTagName('button')[0];
+        var btn1 = document.getElementsByTagName('button')[1];
+        var p = document.getElementsByTagName('p')[0];
+        var timer;
+        btn.addEventListener('click',function (){
+            div2.setAttribute('class','start');
+            clearInterval(timer);
+            timer = setInterval(function (){
+                if(parseInt(window.getComputedStyle(moveShow,null).left) == 0){ //需要动画移动按照left移动  不能是transform 不然读取left值总是固定的初始值
+                    p.innerHTML = '动画加载完成';
+                    clearInterval(timer);
+                }
+            },500);
+        },false);
+        btn1.addEventListener('click',function (){
+            var cls = div2.getAttribute('class');
+            div2.setAttribute('class',cls + ' ' + 'paused');
+        },false);
+    </script>
+</body>
+
+</html>

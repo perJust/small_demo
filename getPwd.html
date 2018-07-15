@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>获取password</title>
+	<style>
+		input {
+			width: 200px;
+			height: 50px;
+			border-radius: 10px;
+			outline: none;
+		}
+	</style>
+</head>
+<body>
+	<input type="password" id="pwd" />
+	<button>ok</button>
+	<span></span>
+	<script>
+		var pwd = document.querySelector("#pwd");
+		var btn = document.querySelector("button");
+		var span = document.querySelector("span");
+		// btn.onclick = function (){
+		// 	alert(pwd.value);
+		// }
+		btn.addEventListener('click',function(){
+			// console.log(pwd.value);
+			span.innerHTML = pwd.value;
+		},false)
+	</script>
+</body>
+</html>

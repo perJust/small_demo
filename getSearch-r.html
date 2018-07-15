@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取百度搜索推荐</title>
+    <style>
+        body {
+            /* position: absolute; */
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            /* 这就是为什么最外面要用一个div全包裹起来的原因,可防止内部设置margin-top时将body塌陷下来 */
+            width: 100%;
+            height: 100%;
+            position: relative;
+            top: 0;
+            left: 0;
+            /* border: 1px solid transparent; */
+
+        }
+
+        .wrapper .core {
+            margin: 50px 100px 0px;
+            border: 1px solid red;
+            height: 300px;
+        }
+
+        .wrapper .core .content {
+            width: 100%;
+            height: 32px;
+        }
+        .content .search {
+            width: 360px;
+            height: 30px;
+            margin: 2px auto 0;
+            font-size: 0; /* 内部的行内元素会有空隙，就是因为父级的font-size导致，空隙为默认的font-size值*/
+            border: 1px solid blue;
+            border-radius: 5px; 
+            overflow: hidden;
+            padding: 0;
+        }
+        .content .search input {
+            width: 280px;
+            height: 30px;
+            margin: 0;
+            border: none;
+            padding: 0;
+            vertical-align: top;
+            outline: none;
+            text-indent: 5px;            
+            /* font-size: 14px; */
+        }
+        .content .search span {
+            width: 30px;
+            height: 30px;
+            /* border: none; */
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+            line-height: 30px;
+            display:inline-block;
+            vertical-align: top;
+            cursor: pointer;
+        }
+        .content .search button {
+            width: 50px;
+            height: 30px;
+            font-size: 16px;
+            border: none;
+            padding: 0;
+            outline: none;
+        }
+        .core .val {
+            width: 100%;
+            height: auto;
+            padding: 0;
+        }
+        #recom {
+            width: 360px;
+            height: auto;
+            margin: 0 auto;
+            padding: 0;
+        }
+        #recom ul {
+            display: none;
+            width: 100%;
+            height: auto;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 1px solid blue;  
+            /* transition: all 2s ease;                    */
+        }
+        #recom ul li {
+            cursor: pointer;
+            background-color: #fff;
+            transition: all 1s ease;
+        }
+        #recom ul li:hover {
+            background-color: rgb(180, 160, 160);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="core">
+            <div class="content">
+                <div class="search">
+                    <input type="text" placeholder="请输入">
+                    <span>123</span>
+                    <button>搜索</button>
+                </div>
+            </div>
+            <div class="val">
+                <div id="recom">
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="de" style="width: 100px;height: 100px;border: 1px solid red;"></div> -->
+    <script>
+        var inp = document.getElementsByTagName('input')[0];
+        var btn = document.getElementsByTagName('button')[0];
+        var recom = document.getElementById('recom');        
+        var ul = recom.getElementsByTagName('ul')[0];        
+        var data = null, len;
+        function getData(d) {
+            data = d;
+        }
+        inp.addEventListener('keyup',function (e){
+            createSrc(inp.value);
+            ul.style.display = 'block';             
+            if(inp.innerHTML == ''){
+                ul.style.display = 'none'; 
+            }
+           if (len === 0){
+               ul.style.display = 'none';
+           }
+        },false);
+        inp.addEventListener('click',function (e){
+            if(ul.innerHTML){
+                ul.style.display = 'block';
+            }
+        },false);
+        recom.addEventListener('click',function (e){
+            inp.value = e.target.innerHTML;
+        },false);
+        recom.addEventListener('mouseleave',function (e){
+            ul.style.display = 'none';            
+        },false);
+
+        //btn一般都是在确认搜索时，使下拉信息隐藏或消失
+        btn.addEventListener('click',function (e){
+            ul.style.display = 'none';
+        },false);
+        // var xhr = new XMLHttpRequest();
+        // xhr.onload = function (){
+        //     console.log(this.responseText);
+        // }
+        // xhr.open('GET','https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=jquery&cb=jQuery',true);
+        // xhr.setRequestHeader("CONTENT-TYPE", "application/x-www-form-urlencoded")
+        // xhr.send();
+    </script>
+    <script>
+        var scp = null;
+        var createSrc = function (getVal){
+            if(scp){
+                document.body.removeChild(scp);
+                ul.innerHTML = '';
+            }
+         scp = document.createElement('script');
+         scp.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+ getVal +'&cb=getData';
+         document.body.appendChild(scp);
+         scp.onload = function (){
+           len = data.s.length;
+           if (len === 0){
+               ul.style.display = 'none';
+           }else{
+                for(var i = 0; i < len; i++ ){
+                    var li = document.createElement('li');
+                    li.innerHTML = data.s[i];
+                    ul.appendChild(li);
+           }  
+           ul.style.display = 'block';                          
+           }
+        //    console.log(ul);
+        // recom.appendChild(ul);
+         }
+        }
+
+    </script>
+</body>
+
+</html>

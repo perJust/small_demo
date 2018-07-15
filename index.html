@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrapper {
+            -webkit-perspective: 2000;
+            perspective: 2000;
+            position: absolute; /* 为了触发BFC,因为内部设置了margin-top，使margin塌陷 */
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            box-sizing: border-box;
+        }
+
+        .d {
+            /* border: 1px solid red; */
+            margin-left: 200px;
+            margin-top: 200px;
+            position: relative;
+            /* z-index: 500; */
+            transform-style: preserve-3d;
+            -webkit-animation: move 5s infinite alternate;
+            animation: move 5s infinite alternate;
+        }
+        .d:hover{
+            -webkit-animation-play-state: paused;
+        }
+
+        .div1 {
+            background-color: #f3a64e;
+            opacity: 0.75;
+            transform: rotateY(-90deg);
+            position: absolute;
+            /* z-index: 900; */
+            left: -100px;
+            /* -webkit-animation: move 3s infinite; */
+        }
+
+        .div2 {
+            background-color: #f18888;
+            opacity: 0.75;
+            transform: rotateX(90deg);
+            position: absolute;
+            /* z-index: 900; */
+            top: -100px;
+            /* -webkit-animation: move 3s infinite; */
+        }
+
+        .div3 {
+            background-color: #b2f089;
+            opacity: 0.75;
+            transform: rotateX(90deg);
+            position: absolute;
+            /* z-index: 900; */
+            top: 100px;
+            /* -webkit-animation: move 3s infinite; */
+        }
+
+        .div4 {
+            background-color: #89d3f0;
+            opacity: 0.75;
+            transform: rotateY(90deg);
+            position: absolute;
+            /* z-index: 900; */
+            left: 100px;
+            /* -webkit-animation: move 3s infinite; */
+        }
+
+        .div5 {
+            background-color: #b089f0;
+            opacity: 0.75;
+            transform: translateZ(-100px) rotateY(180deg);
+            position: absolute;
+            /* z-index: 500; */
+            left: 0px;
+            /* -webkit-animation: move 3s infinite; */
+        }
+
+        .div6 {
+            background-color: #f089df;
+            position: absolute;
+            opacity: 0.75;
+            transform: translateZ(100px);
+            /* z-index: 999; */
+            left: 0px;
+            /* -webkit-animation: move 3s infinite; */
+        }
+
+        @keyframes move {
+            10% {
+                transform: initial;
+            }
+            30% {
+                transform: translateX(30px) translateY(-30px) rotateX(80deg) rotateZ(80deg);
+            }
+            60% {
+                transform: translateX(100px) translateY(-100px) rotateY(80deg) rotateX(240deg);
+            }
+            100% {
+                transform: translateX(100px) translateY(-100px) rotateZ(240deg) rotateY(240deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper" style="width:100%;height: 800px;">
+    <div class="d">
+        <div class="div1" style="padding:50px 50px;">
+            <p style="text-align:center;color:#e0ee23;font-size: 100px;margin: 0;width: 100px;height: 100px;line-height: 100px;">1</p>
+        </div>
+        <div class="div2" style="padding:50px 50px;">
+            <p style="text-align:center;color:#e0ee23;font-size: 100px;margin: 0;width: 100px;height: 100px;line-height: 100px;">2</p>
+        </div>
+        <div class="div3" style="padding:50px 50px;">
+            <p style="text-align:center;color:#e0ee23;font-size: 100px;margin: 0;width: 100px;height: 100px;line-height: 100px;">3</p>
+        </div>
+        <div class="div4" style="padding:50px 50px;">
+            <p style="text-align:center;color:#e0ee23;font-size: 100px;margin: 0;width: 100px;height: 100px;line-height: 100px;">4</p>
+        </div>
+        <div class="div5" style="padding:50px 50px;">
+            <p style="text-align:center;color:#e0ee23;font-size: 100px;margin: 0;width: 100px;height: 100px;line-height: 100px;">5</p>
+        </div>
+        <div class="div6" style="padding:50px 50px;">
+            <p style="text-align:center;color:#e0ee23;font-size: 100px;margin: 0;width: 100px;height: 100px;line-height: 100px;">6</p>
+        </div>
+    </div>
+</div>
+
+    <script>
+        var div1 = document.getElementsByTagName('div')[0];
+        var div2 = document.getElementsByTagName('div')[1];
+        div2.onclick = function () {
+            console.log(this)
+        };
+        div1.onclick = function () {
+            console.log(this)
+        }
+    </script>
+</body>
+
+</html>
